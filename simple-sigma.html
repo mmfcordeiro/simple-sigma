@@ -1,0 +1,52 @@
+<head>
+  <title>simple-sigma-reactive</title>
+</head>
+
+<body>
+
+
+  <h1>Dynamic Graphs</h1>
+
+  {{> token}}
+
+  {{> layout}}
+
+  {{> time}}
+  
+  {{> slider}}
+
+  {{> container}}
+
+</body>
+
+<template name="layout">
+  <div id="graph-control">
+  	<button>Layout</button>
+  	<p>ForceAtlas2 is {{#if counter}}on{{else}}off{{/if}}.</p>
+  </div>
+</template>
+
+<template name="time">
+  <div id="play-control">
+  <button id="previous">previous</button>
+   <button id="play">{{#if play}}stop{{else}}play{{/if}}</button>
+   <button id="next">next</button>
+  </div>
+</template>
+
+<template name="container">
+    <div id="container">
+      <div id="graph-container"></div>
+    </div>
+</template>
+
+<template name="slider">
+  <div id="slider-control">
+    <div id="slider"></div>
+    <p>Begin: {{slider.[0]}}, End: {{slider.[1]}}</p>
+  </div> 
+</template>
+
+<template name="token">
+  <p>I'm using token {{theToken}}.</p>
+</template>

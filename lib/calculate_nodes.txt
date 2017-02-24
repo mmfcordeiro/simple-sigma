@@ -1,0 +1,24 @@
+db.nodes.find().forEach(function(node) {
+
+	var item = db.edges.findOne({ $or : [{ source : node.id}, { target : node.id}]});
+
+	if (item == null) {
+    	db.nodes.remove(node);
+    };
+});
+
+db.edges.find().forEach(function(edge) {
+    db.nodes_copy.find({ $or : [{id: edge.source}, {id: edge.target}]}).forEach(function(node) {
+    	//printjson(node);
+
+    	var item = db.nodes.findOne(node);
+
+        if (item == null) {
+            db.nodes.insert(node);
+        };                            
+    });
+});
+
+
+
+

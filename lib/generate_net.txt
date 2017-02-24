@@ -1,0 +1,76 @@
+var i,
+    s,
+    o,
+    N = 500,
+    E = 1000,
+    C = 5,
+    d = 0.5,
+    cs = [],
+    g = {
+        nodes: [],
+        edges: []
+    };
+
+
+function randomTime(start, end) {
+    var diff =  end.getTime() - start.getTime();
+    var new_diff = diff * Math.random();
+    var date = new Date(start.getTime() + new_diff);
+    return date;
+}
+
+
+// Generate the graph:
+for (i = 0; i < C; i++)
+    cs.push({
+        id: i,
+        nodes: [],
+        color: '#' + (
+            Math.floor(Math.random() * 16777215).toString(16) + '000000'
+        ).substr(0, 6)
+    });
+
+for (i = 0; i < N; i++) {
+    o = cs[(Math.random() * C) | 0];
+    g.nodes.push({
+        id: 'n' + i,
+        label: 'Node' + i,
+        x: 100 * Math.cos(2 * i * Math.PI / N),
+        y: 100 * Math.sin(2 * i * Math.PI / N),
+        size: Math.random(),
+        color: o.color
+    });
+    o.nodes.push('n' + i);
+}
+
+for (i = 0; i < E; i++) {
+    
+    var new_time = randomTime(new Date("01-01-2015"), new Date("12-31-2015"));
+
+    if (Math.random() < 1 - d)
+        g.edges.push({
+            id: 'e' + i,
+            source: 'n' + ((Math.random() * N) | 0),
+            target: 'n' + ((Math.random() * N) | 0),
+            date: new_time
+        });
+    else {
+        o = cs[(Math.random() * C) | 0]
+        g.edges.push({
+            id: 'e' + i,
+            source: o.nodes[(Math.random() * o.nodes.length) | 0],
+            target: o.nodes[(Math.random() * o.nodes.length) | 0],
+            date: new_time
+        });
+    }
+}
+
+g.nodes.forEach(function(node) {
+    //printjson(node);
+    db.nodes.insert(node);
+});
+
+g.edges.forEach(function(edge) {
+    //printjson(edge);
+    db.edges.insert(edge);
+});

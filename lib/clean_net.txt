@@ -1,0 +1,2 @@
+db.edges.remove({});
+db.nodes.remove({});
